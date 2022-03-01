@@ -3,6 +3,7 @@ package com.sea.aspectlog;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,7 +20,13 @@ public class AspectLogAutoConfiguration implements PriorityOrdered {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Around("@annotation(com.sea.aspectlog.AspectLog) ")
+
+    @Pointcut("@annotation(com.sea.aspectlog.AspectLog) ")
+    private void cutMethod() {
+
+    }
+
+    @Around("cutMethod()")
     public Object isOpen(ProceedingJoinPoint thisJoinPoint)
             throws Throwable {
         //执行方法名称
